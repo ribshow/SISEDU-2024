@@ -23,6 +23,7 @@
 <main>
     <form id="cadAluno" action="{{route('criar')}}" method="POST" class="global-container">
         @csrf
+        @method('POST')
         <h3>Cadastrar Aluno</h3>
         <div class="main-login-input main-login-container" id="step1">
             <div>
@@ -50,6 +51,7 @@
 <main>
     <form id="cadProf" method="POST" action="{{route('criar_prof')}}" class="global-container">
         @csrf
+        @method('POST')
         <h3>Cadastrar Professor</h3>
         <div class="main-login-input main-login-container" id="step1">
             <div>
@@ -76,69 +78,81 @@
 </main>
 <script>
     // REQUISIÇÃO AJAX PARA CADASTRAR UM ALUNO
-    const editUsers = document.querySelectorAll('#cadAluno');
-        editUsers.forEach(form => {
-            form.addEventListener('submit', function(event) {
-                event.preventDefault();
+    // REQUISIÇÃO AJAX PARA CADASTRAR UM ALUNO
+    const cadAluno = document.querySelector('#cadAluno');
+    cadAluno.addEventListener('submit', function(event) {
+        event.preventDefault();
 
-                if(confirm('Deseja realmente cadastrar esse aluno?')){
-                    const action = this.action;
-                    const csrfToken =  document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+        if (confirm('Deseja realmente cadastrar esse aluno?')) {
+            const action = this.action;
+            const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
 
-                    const formData = new FormData(this);
+            const formData = new FormData(this);
 
-                    fetch(action, {
-                        method: 'POST',
-                        headers: {
-                            'X-CSRF-TOKEN': csrfToken,
-                            'Accept': 'application/json'
-                        },
-                        body: formData
-                    })
-                    .then(response => response.json())
-                    .then(data => {
-                        if(data.sucesso){
-                            alert(data.sucesso);
-                        }else {
-                            alert('Houve um problema ao cadastrar o aluno!');
-                        }
-                    })
-                    .catch(error => console.error('Erro', error));
+            fetch(action, {
+                method: 'POST',
+                headers: {
+                    'X-CSRF-TOKEN': csrfToken,
+                    'Accept': 'application/json'
+                },
+                body: formData
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
                 }
-            });
-        });
+                return response.json();
+            })
+            .then(data => {
+                if (data.sucesso) {
+                    alert(data.sucesso);
+                } else if (data.alerta) {
+                    alert(data.alerta);
+                } else {
+                    alert('Resposta inesperada do servidor.');
+                }
+            })
+            .catch(error => console.error('Erro:', error));
+        }
+    });
+
 
         // REQUISIÇÃO AJAX PARA CADASTRAR UM PROFESSOR
-    const editProf = document.querySelectorAll('#cadProf');
-        editProf.forEach(form => {
-            form.addEventListener('submit', function(event) {
-                event.preventDefault();
+        const cadProf = document.querySelector('#cadProf');
+            cadProf.addEventListener('submit', function(event) {
+            event.preventDefault();
 
-                if(confirm('Deseja realmente cadastrar esse professor?')){
-                    const action = this.action;
-                    const csrfToken =  document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+            if (confirm('Deseja realmente cadastrar esse professor?')) {
+                const action = this.action;
+                const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
 
-                    const formData = new FormData(this);
+                const formData = new FormData(this);
 
-                    fetch(action, {
-                        method: 'POST',
-                        headers: {
-                            'X-CSRF-TOKEN': csrfToken,
-                            'Accept': 'application/json'
-                        },
-                        body: formData
-                    })
-                    .then(response => response.json())
-                    .then(data => {
-                        if(data.sucesso){
-                            alert(data.sucesso);
-                        }else {
-                            alert('Houve um problema ao cadastrar o professor!');
-                        }
-                    })
-                    .catch(error => console.error('Erro', error));
-                }
-            });
+                fetch(action, {
+                    method: 'POST',
+                    headers: {
+                        'X-CSRF-TOKEN': csrfToken,
+                        'Accept': 'application/json'
+                    },
+                    body: formData
+                })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    if (data.sucesso) {
+                        alert(data.sucesso);
+                    } else if (data.alerta) {
+                        alert(data.alerta);
+                    } else {
+                        alert('Resposta inesperada do servidor.');
+                    }
+                })
+                .catch(error => console.error('Erro:', error));
+            }
         });
 </script>
 
