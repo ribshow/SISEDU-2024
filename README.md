@@ -5,6 +5,7 @@
 - **PHP 8.0** ou versões superiores
 - **Laravel Framework 9.0** ou versões superiores
 - **Composer 2.0** ou versões superiores
+- **O Banco de dados está dentro do arquivo zip**
 
 **1° Forma:**
 - Descompactando o arquivo zipado do projeto e adicionando o banco de dados manualmente a sua máquina usando o **phpMyAdmin** ou qualquer IDE **MySQL**.
