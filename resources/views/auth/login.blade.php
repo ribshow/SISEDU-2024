@@ -9,14 +9,14 @@
     <link rel="stylesheet" href="css/global.css">
     <link rel="stylesheet" href="css/header.css">
     <link rel="stylesheet" href="css/footer.css">
-    
+
     <title>SISEDU 2024</title>
 </head>
 <body>
     <header>
         <div class="header-container">
             <div>
-                <a href="home.html"><h1>SISEDU 2024 - INTEGRA FATEC</h1></a>
+                <a href="/"><h1>SISEDU 2024 - INTEGRA FATEC</h1></a>
             </div>
             <div>
                 <a href="{{route('register')}}">
